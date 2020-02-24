@@ -1,9 +1,11 @@
 package com.dsajava;
 
+import java.util.ArrayDeque;
 import java.util.Arrays;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Main {
-
     public static void main(String[] args) {
         /*
         System.out.println("Hello World!");
@@ -103,8 +105,156 @@ public class Main {
 
          */
         // ---- Stacks ----
-
+        /*
         StringReverser sr = new StringReverser();
         System.out.println(sr.reverse("abcd"));
+
+        Expression exp = new Expression();
+        System.out.println(exp.isBalanced("(1+2)"));
+
+        Stack stack = new Stack(4);
+        stack.push(5);
+        stack.push(2);
+        stack.push(10);
+        stack.push(1);
+        System.out.println(stack.toString());
+        stack.print();
+        System.out.println("Min: " + stack.min());
+        System.out.println("Pop: " + stack.pop());
+        System.out.println("Min: " + stack.min());
+        //System.out.println("Pop: " + stack.pop());
+        stack.print();
+        System.out.println("Peek: " + stack.peek());
+
+        DoubleStack doubleStack = new DoubleStack(10);
+        doubleStack.push1(10);
+        doubleStack.push1(20);
+        doubleStack.push2(30);
+        doubleStack.push2(40);
+        doubleStack.pop1();
+        doubleStack.push1(50);
+        doubleStack.pop2();
+        doubleStack.push2(60);
+        System.out.println(doubleStack.toString());
+
+         */
+        // ---- Queues ----
+
+        Queue<Integer> queue = new ArrayDeque<>();
+        queue.add(10);
+        queue.add(20);
+        queue.add(30);
+
+        reverseUsingStack(queue);
+        System.out.println(queue);
+
+        reverseUsingQueue(queue);
+
+        ArrayQueue arrayQueue = new ArrayQueue(5);
+
+        arrayQueue.enqueue(10);
+        arrayQueue.enqueue(20);
+        arrayQueue.enqueue(30);
+        arrayQueue.enqueue(40);
+        arrayQueue.enqueue(50);
+        System.out.println(arrayQueue.toString());
+        System.out.println(arrayQueue.dequeue());
+        System.out.println(arrayQueue.dequeue());
+        System.out.println(arrayQueue.toString());
+        arrayQueue.enqueue(60);
+        arrayQueue.enqueue(70);
+        //arrayQueue.enqueue(80);
+        System.out.println(arrayQueue.toString());
+
+        StackQueue stackQueue = new StackQueue();
+        stackQueue.enqueue(10);
+        stackQueue.enqueue(20);
+        stackQueue.enqueue(30);
+        System.out.println(stackQueue.dequeue());
+
+        PriorityQueue priorityQueue = new PriorityQueue(5);
+        priorityQueue.enqueue(3);
+        System.out.println(priorityQueue.toString());
+        priorityQueue.enqueue(1);
+        System.out.println(priorityQueue.toString());
+        priorityQueue.enqueue(5);
+        System.out.println(priorityQueue.toString());
+        priorityQueue.enqueue(2);
+        System.out.println(priorityQueue.toString());
+
+        Queue<Integer> queue1 = new ArrayDeque<>();
+        queue1.add(10);
+        queue1.add(20);
+        queue1.add(30);
+        queue1.add(40);
+        queue1.add(50);
+
+        System.out.println(queue1);
+
+        queue1 = reverseKItemsInQueue(queue1,3);
+
+        System.out.println(queue1);
+
+        LinkedListQueue llq = new LinkedListQueue();
+        llq.enqueue(10);
+        llq.enqueue(20);
+        llq.enqueue(30);
+        System.out.println(llq.toString());
+        System.out.println(llq.dequeue());
+        System.out.println(llq.toString());
+        System.out.println(llq.peek());
+
+        QueueStack qs = new QueueStack();
+        qs.push(10);
+        qs.push(20);
+        qs.push(30);
+        System.out.println(qs.pop());
+        qs.push(40);
+        System.out.println(qs.peek());
+
     }
+
+    public static void reverseUsingQueue(Queue<Integer> queue){
+        Queue<Integer> queue1 = new ArrayDeque<>();
+        Queue<Integer> queue2 = new ArrayDeque<>();
+        while(!queue.isEmpty()){
+            queue1.add(queue.remove());
+            while(!queue2.isEmpty()){
+                queue1.add(queue2.remove());
+            }
+            while (!queue1.isEmpty()){
+                queue2.add(queue1.remove());
+            }
+        }
+        System.out.println(queue2);
+    }
+
+    public static void reverseUsingStack(Queue<Integer> queue){
+        Stack<Integer> stack = new Stack<>();
+        while (!queue.isEmpty()){
+            stack.push(queue.remove());
+        }
+        while (!stack.isEmpty()){
+            queue.add(stack.pop());
+        }
+    }
+
+    public static Queue<Integer> reverseKItemsInQueue(Queue<Integer> queue, int k){
+        Stack<Integer> stack = new Stack<>();
+        Queue<Integer> tempQueue = new ArrayDeque<>();
+        for(int i = 0; i < k; i++){
+            stack.push(queue.remove());
+        }
+        while(!queue.isEmpty()){
+            tempQueue.add(queue.remove());
+        }
+        while(!stack.isEmpty()){
+            queue.add(stack.pop());
+        }
+        while(!tempQueue.isEmpty()){
+            queue.add(tempQueue.remove());
+        }
+        return queue;
+    }
+
 }
