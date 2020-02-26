@@ -1,9 +1,8 @@
 package com.dsajava;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
 import java.util.Stack;
+import java.util.stream.StreamSupport;
 
 public class Main {
     public static void main(String[] args) {
@@ -139,7 +138,7 @@ public class Main {
 
          */
         // ---- Queues ----
-
+        /*
         Queue<Integer> queue = new ArrayDeque<>();
         queue.add(10);
         queue.add(20);
@@ -212,6 +211,28 @@ public class Main {
         qs.push(40);
         System.out.println(qs.peek());
 
+         */
+        System.out.println(firstNonRepeatingCharacter("a green apple"));
+    }
+
+    public static char firstNonRepeatingCharacter(String string){
+        Map<Character,Integer> hash = new HashMap<>();
+        for(char ch: string.toCharArray()){
+            if(!hash.containsKey(ch)){
+                hash.put(ch,1);
+            }
+            else{
+                int count = hash.get(ch);
+                hash.put(ch,++count);
+            }
+        }
+        for(char ch: string.toCharArray()){
+            if(hash.containsKey(ch)){
+                if(hash.get(ch) == 1) return ch;
+            }
+        }
+        //System.out.println(hash);
+        return ' ';
     }
 
     public static void reverseUsingQueue(Queue<Integer> queue){
