@@ -1,5 +1,6 @@
 package com.dsajava;
 
+import java.sql.SQLOutput;
 import java.util.*;
 import java.util.Stack;
 import java.util.stream.StreamSupport;
@@ -213,10 +214,98 @@ public class Main {
 
          */
         System.out.println(firstNonRepeatingCharacter("a green apple"));
+        System.out.println(firstRepeatingCharacter("green apple"));
+
+        HashTable table = new HashTable();
+        table.put(6,"A");
+        table.put(8,"B");
+        table.put(11,"C");
+        table.put(6,"A+");
+        System.out.println(table.get(6));
+
+        int[] items = {1, 2, 2, 3, 3, 3, 4};
+        System.out.println(mostFrequentElement(items));
+        int[] items2 = {1, 7, 5, 9, 2, 12, 3};
+        System.out.println(countPAirsWithDiff(items2,2));
+        int[] items3 = {2, 7, 11, 15};
+        System.out.println(Arrays.toString(twoSum(items3,9)));
+
+        HashMap table1 = new HashMap();
+        table1.put(6,"A");
+        table1.put(8,"B");
+        table1.put(11,"C");
+        table1.put(6,"A+");
+        System.out.println(table1.get(6));
+        System.out.println(table1.get(11));
+
+    }
+
+    public static int countPAirsWithDiff(int[] items, int diff){
+        Set<Integer> set = new HashSet<>();
+        for(int item: items) {
+            set.add(item);
+        }
+        int count = 0;
+        for(int item: set) {
+            if(set.contains(item + diff)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public static int[] twoSum(int[] items, int sum){
+        Map<Integer,Integer> hash = new java.util.HashMap<>();
+        for(int i = 0; i < items.length; i++){
+            hash.put(items[i], i);
+        }
+        int[] result = new int[2];
+        for(int item: hash.keySet()){
+            if(hash.containsKey(sum-item)){
+                result[0] = hash.get(item);
+                result[1] = hash.get(sum-item);
+                return result;
+            }
+        }
+        return null;
+    }
+
+    public static int mostFrequentElement(int[] items){
+        Map<Integer,Integer> hash = new java.util.HashMap<>();
+        for(int item: items){
+            if(!hash.containsKey(item)){
+                hash.put(item,1);
+            }
+            else{
+                int count = hash.get(item);
+                hash.put(item,++count);
+            }
+        }
+        int maxCount = 0;
+        int maxItem = 0;
+        for(int item: hash.keySet()){
+            int count = hash.get(item);
+            if(count > maxCount) {
+                maxCount = count;
+                maxItem = item;
+            }
+        }
+        return maxItem;
+    }
+
+    public static char firstRepeatingCharacter(String string){
+        Set<Character> set = new HashSet<>();
+        for(char ch: string.toCharArray()){
+            if(set.contains(ch)){
+                return ch;
+            }
+            set.add(ch);
+        }
+        return Character.MAX_VALUE;
     }
 
     public static char firstNonRepeatingCharacter(String string){
-        Map<Character,Integer> hash = new HashMap<>();
+        Map<Character,Integer> hash = new java.util.HashMap<>();
         for(char ch: string.toCharArray()){
             if(!hash.containsKey(ch)){
                 hash.put(ch,1);
@@ -231,8 +320,7 @@ public class Main {
                 if(hash.get(ch) == 1) return ch;
             }
         }
-        //System.out.println(hash);
-        return ' ';
+        return Character.MAX_VALUE;
     }
 
     public static void reverseUsingQueue(Queue<Integer> queue){
